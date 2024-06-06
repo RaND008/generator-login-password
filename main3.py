@@ -1,3 +1,5 @@
+
+
 # Открываем TXT с логинами и создаем список
 filename_login = "login.txt"
 with open(filename_login, 'r') as f:
@@ -9,6 +11,9 @@ filename_password = "password.txt"
 with open(filename_password, 'r') as f:
     password = [line.rstrip('\n') for line in f] # Генерация списка паролей с удалением перехода символа строки \n
 # Открываем TXT с паролями и создаем список
+
+
+#Добавление "" на login и password
 l = [] # Создание пустого списка для работы с ним в цикле (Login)
 p = [] # Создание пустого списка для работы с ним в цикле (Password)
 # Создание цикла и вложенного цикла согласно ТЗ пользователя XSS.is и вывод данных
@@ -23,9 +28,37 @@ for login_x in login:
 # Преобразование списков в строку
 Spisok_loginov = l
 Spisok_password = p
-razdelitel_stroki = ", "
+razdelitel_stroki = ","
 login_stroka = razdelitel_stroki.join(Spisok_loginov)
 password_stroka = razdelitel_stroki.join(Spisok_password)
+#print(login_stroka)
+#print(password_stroka)
+#Добавление "" на login и password
+p = []
+l = []
+#Добавление ""
+for x in Spisok_loginov:
+    login_format = ''.join(('"', x, '"'))
+    login_list = l.append(login_format)
 
-print(login_stroka)
-print(password_stroka)
+for y in password:
+    login_password = ''.join(('"', y, '"'))
+    password_list = p.append(login_password)
+# Добавление ""
+# Преобразование списков в строку
+Spisok_loginov = l
+Spisok_password = p
+razdelitel_stroki = ", "
+
+login_stroka = razdelitel_stroki.join(Spisok_loginov)
+password_stroka = razdelitel_stroki.join(Spisok_password)
+count = 0
+password_obrezka = len(password_stroka) // len(password)
+
+for i in range(len(login)):
+    with open("output.txt", "a") as f:
+        login_out = ('"' + login[count] + '"' + ',' + " ") * len(password)
+        print(login_out[:-2], file=f)
+        count += 1
+    with open("output.txt", "a") as f:
+        print(password_stroka + "\n", file=f)
